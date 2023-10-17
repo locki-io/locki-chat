@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       const payload = {
         id,
         title,
-        userId: 1,
+        userId: '1',
         createdAt,
         path,
         messages: [
