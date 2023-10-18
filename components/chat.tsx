@@ -77,7 +77,7 @@ export function Chat({
             <ChatScrollAnchor trackVisibility={isLoading} />
           </>
         ) : (
-          <EmptyScreen setInput={setInput} />
+          <EmptyScreen />
         )}
       </div>
       <ChatPanel
