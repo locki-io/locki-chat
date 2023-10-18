@@ -16,25 +16,31 @@ import {
   DialogHeader,
   DialogTitle
 } from '@/components/ui/dialog'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
-console.log('process.env.VERCEL_ENV', process.env.VERCEL_ENV);
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
+  blenderMsg?: string
 }
 
-export function Chat({ id, initialMessages, className }: ChatProps) {
+export function Chat({
+  id,
+  initialMessages,
+  className,
+  blenderMsg
+}: ChatProps) {
   const [previewToken, setPreviewToken] = useLocalStorage<string | null>(
     'ai-token',
     null
   )
   const [previewTokenDialog, setPreviewTokenDialog] = useState(IS_PREVIEW)
   const [previewTokenInput, setPreviewTokenInput] = useState(previewToken ?? '')
+  const [initMsgGenerated, setInitMsgGenerated] = useState(false);
   const { messages, append, reload, stop, isLoading, input, setInput } =
     useChat({
       initialMessages,
@@ -49,6 +55,19 @@ export function Chat({ id, initialMessages, className }: ChatProps) {
         }
       }
     })
+
+  useEffect(() => {
+    if (!initMsgGenerated) {
+      (async () => {
+        await append({
+          id,
+          content: blenderMsg,
+          role: 'user'
+        })
+      })()
+      setInitMsgGenerated(true)
+    }
+  }, [blenderMsg])
   return (
     <>
       <div className={cn('pb-[200px] pt-4 md:pt-10', className)}>
