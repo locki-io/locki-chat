@@ -57,7 +57,7 @@ export function Chat({
     })
 
   useEffect(() => {
-    if (!initMsgGenerated) {
+    if (!initMsgGenerated && blenderMsg) {
       (async () => {
         await append({
           id,
