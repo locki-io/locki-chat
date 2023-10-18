@@ -12,6 +12,10 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration)
 
+export const config = {
+  supportsResponseStreaming: true
+};
+
 export async function POST(req: Request) {
   const json = await req.json()
   const { messages, previewToken } = json
