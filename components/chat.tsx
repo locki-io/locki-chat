@@ -22,6 +22,7 @@ import { Input } from './ui/input'
 import { toast } from 'react-hot-toast'
 
 const IS_PREVIEW = process.env.VERCEL_ENV === 'preview'
+console.log('process.env.VERCEL_ENV', process.env.VERCEL_ENV);
 export interface ChatProps extends React.ComponentProps<'div'> {
   initialMessages?: Message[]
   id?: string
